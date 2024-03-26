@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String      @id @default(uuid())
+  email       String      @unique
+  name        String
+  password    String
+  accessLevel AccessLevel
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum AccessLevel {
+  ADMIN
+  USER
+}
+
+model Media {
+  id             String         @id @default(uuid())
+  title          String
+  description    String
+  releaseDate    DateTime
+  director       Director       @relation(fields: [directorId], references: [id])
+  artists        Artist[]
+  categories     Category[]
+  parentalRating ParentalRating
+  movie          Movie[]
+  serie          Serie[]
+  directorId     String
+}
+
+enum ParentalRating {
+  G // Free
+  PG // 10 years
+  PG_13 // 12 years
+  R // 16 years
+  NC_17 // 18 years
+}
+
+model Category {
+  id      String  @id @default(uuid())
+  name    String
+  media   Media?  @relation(fields: [mediaId], references: [id])
+  mediaId String?
+}
+
+model Movie {
+  id       String @id @default(uuid())
+  duration Int
+  media    Media  @relation(fields: [mediaId], references: [id])
+  mediaId  String
+}
+
+model Serie {
+  id      String   @id @default(uuid())
+  seasons Season[]
+  media   Media    @relation(fields: [mediaId], references: [id])
+  mediaId String
+}
+
+model Season {
+  id       String    @id @default(uuid())
+  serie    Serie     @relation(fields: [serieId], references: [id])
+  serieId  String
+  episodes Episode[]
+}
+
+model Episode {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  duration    Int
+  season      Season @relation(fields: [seasonId], references: [id])
+  seasonId    String
+}
+
+model Director {
+  id     String  @id @default(uuid())
+  name   String
+  medias Media[]
+}
+
+model Artist {
+  id      String  @id @default(uuid())
+  name    String
+  media   Media?  @relation(fields: [mediaId], references: [id])
+  mediaId String?
+}
