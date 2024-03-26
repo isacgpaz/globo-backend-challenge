@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateDirectorUseCase } from './create-director-use-case';
-import { CreateDirectorController } from './create-director.controller';
-
+import { CreateDirectorUseCase } from './create-director/create-director-use-case';
+import { CreateDirectorController } from './create-director/create-director.controller';
 
 @Module({
   imports: [],

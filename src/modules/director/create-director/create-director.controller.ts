@@ -2,9 +2,9 @@ import { Body, Controller, HttpCode, Post, UseGuards, UsePipes } from "@nestjs/c
 import { AccessLevel } from "@prisma/client";
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe";
 import { z } from "zod";
-import { JwtAuthGuard } from "../auth/guards/auth.guard";
-import { RolesGuard } from "../auth/guards/roles.guard";
-import { HasRole } from "../auth/shared/role.decorator";
+import { JwtAuthGuard } from "../../auth/guards/auth.guard";
+import { RolesGuard } from "../../auth/guards/roles.guard";
+import { HasRole } from "../../auth/shared/role.decorator";
 import { CreateDirectorUseCase } from "./create-director-use-case";
 
 const createDirector = z.object({
