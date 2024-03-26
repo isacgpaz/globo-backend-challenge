@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 interface SignIn {
@@ -31,8 +32,7 @@ export class SignInUseCase {
         throw new BadRequestException('Usuário e/ou senha inválidos.');
       }
 
-      // const isPasswordMatched = await bcrypt.compare(password, user.password)
-      const isPasswordMatched = password === user.password
+      const isPasswordMatched = await bcrypt.compare(password, user.password)
 
       if (isPasswordMatched) {
         const { password, ...userWithoutPassword } = user

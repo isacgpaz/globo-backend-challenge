@@ -6,6 +6,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtStrategy } from './shared/jwt.strategy';
 import { SignInUseCase } from './sign-in/sign-in-use-case';
 import { SignInController } from './sign-in/sign-in.controller';
+import { SignUpUseCase } from './sign-up/sign-up-use-case';
+import { SignUpController } from './sign-up/sign-up.controller';
 
 @Module({
   imports: [
@@ -19,10 +21,12 @@ import { SignInController } from './sign-in/sign-in.controller';
   providers: [
     PrismaService,
     JwtStrategy,
-    SignInUseCase
+    SignInUseCase,
+    SignUpUseCase,
   ],
   controllers: [
-    SignInController
+    SignInController,
+    SignUpController
   ],
   exports: [],
 })
