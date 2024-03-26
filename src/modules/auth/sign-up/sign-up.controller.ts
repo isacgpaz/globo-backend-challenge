@@ -9,8 +9,8 @@ import { SignUpUseCase } from "./sign-up-use-case";
 
 const signUpSchema = z.object({
   name: z.string({
-    required_error: 'E-mail é obrigatório.',
-    invalid_type_error: 'E-mail é obrigatório.',
+    required_error: 'Nome é obrigatório.',
+    invalid_type_error: 'Nome é obrigatório.',
   })
     .min(1, 'Nome é obrigatório.'),
   accessLevel: z.nativeEnum(AccessLevel, {

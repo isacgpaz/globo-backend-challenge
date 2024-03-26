@@ -34,12 +34,14 @@ model Media {
   description    String
   releaseDate    DateTime
   director       Director       @relation(fields: [directorId], references: [id])
+  directorId     String
   artists        Artist[]
+  artistsIds     String[]
   categories     Category[]
+  categoriesIds  String[]
   parentalRating ParentalRating
   movie          Movie[]
   serie          Serie[]
-  directorId     String
 }
 
 enum ParentalRating {
@@ -51,10 +53,9 @@ enum ParentalRating {
 }
 
 model Category {
-  id      String  @id @default(uuid())
-  name    String
-  media   Media?  @relation(fields: [mediaId], references: [id])
-  mediaId String?
+  id     String  @id @default(uuid())
+  name   String
+  medias Media[]
 }
 
 model Movie {
@@ -94,8 +95,7 @@ model Director {
 }
 
 model Artist {
-  id      String  @id @default(uuid())
-  name    String
-  media   Media?  @relation(fields: [mediaId], references: [id])
-  mediaId String?
+  id     String  @id @default(uuid())
+  name   String
+  medias Media[]
 }
