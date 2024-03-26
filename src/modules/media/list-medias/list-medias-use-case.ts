@@ -1,11 +1,12 @@
 import {
   Injectable
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { MediaType, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 interface ListMedias {
   title?: string,
+  type?: MediaType,
   categoriesIds?: string[],
   directorId?: string,
   artistsIds?: string[],
@@ -23,7 +24,8 @@ export class ListMediasUseCase {
     page = 1,
     rowsPerPage = 10,
     categoriesIds,
-    title
+    title,
+    type
   }: ListMedias) {
     try {
       const query: Prisma.MediaWhereInput = {}
@@ -49,6 +51,10 @@ export class ListMediasUseCase {
 
       if (directorId) {
         query.directorId = directorId
+      }
+
+      if (type) {
+        query.type = type
       }
 
       const [medias, mediasCount] = await this.prisma.$transaction([

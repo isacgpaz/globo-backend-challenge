@@ -1,5 +1,5 @@
 import { Controller, Get, HttpCode, Query, UseGuards, UsePipes } from "@nestjs/common";
-import { AccessLevel } from "@prisma/client";
+import { AccessLevel, MediaType } from "@prisma/client";
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe";
 import { z } from "zod";
 import { JwtAuthGuard } from "../../auth/guards/auth.guard";
@@ -12,6 +12,7 @@ const listMedias = z.object({
   directorId: z.string().optional(),
   artistsIds: z.array(z.string()).optional(),
   categoriesIds: z.array(z.string()).optional(),
+  type: z.nativeEnum(MediaType).optional(),
   page: z
     .string({
       required_error: 'Número da página é obrigatório',
