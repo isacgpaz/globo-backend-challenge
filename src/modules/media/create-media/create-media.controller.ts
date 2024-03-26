@@ -80,7 +80,7 @@ const createMedia = z.object({
       }))
     })
     )
-  })
+  }).optional()
 });
 
 type CreateMedia = z.infer<typeof createMedia>;
