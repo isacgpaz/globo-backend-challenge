@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ArtistModule } from './modules/artist/artist.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CategoryModule } from './modules/category/category.module';
 import { DirectorModule } from './modules/director/director.module';
 import { PrismaService } from './prisma/prisma.service';
 
@@ -10,7 +11,8 @@ import { PrismaService } from './prisma/prisma.service';
   imports: [
     AuthModule,
     DirectorModule,
-    ArtistModule
+    ArtistModule,
+    CategoryModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
