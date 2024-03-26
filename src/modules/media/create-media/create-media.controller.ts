@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Post, UseGuards, UsePipes } from "@nestjs/common";
-import { AccessLevel, ParentalRating } from "@prisma/client";
+import { AccessLevel, MediaType, ParentalRating } from "@prisma/client";
 import { dayjs } from "src/lib/dayjs";
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe";
 import { z } from "zod";
@@ -37,6 +37,10 @@ const createMedia = z.object({
   parentalRating: z.nativeEnum(ParentalRating, {
     invalid_type_error: 'Nível de acesso é obrigatório.',
     required_error: 'Nível de acesso é obrigatório.'
+  }),
+  type: z.nativeEnum(MediaType, {
+    invalid_type_error: 'Tipo de mídia é obrigatório.',
+    required_error: 'Tipo de mídia é obrigatório.'
   }),
   artistsIds: z.array(z.string({
     invalid_type_error: 'Artista é obrigatório.',

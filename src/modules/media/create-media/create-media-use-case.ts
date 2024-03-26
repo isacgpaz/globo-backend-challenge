@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common';
-import { Artist, Category, ParentalRating } from '@prisma/client';
+import { Artist, Category, MediaType, ParentalRating } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 interface CreateMedia {
@@ -14,6 +14,7 @@ interface CreateMedia {
   artistsIds: string[],
   categoriesIds: string[]
   parentalRating: ParentalRating,
+  type: MediaType,
   movie?: {
     duration: number
   }
@@ -39,6 +40,7 @@ export class CreateMediaUseCase {
     description,
     directorId,
     parentalRating,
+    type,
     releaseDate,
     movie,
     serie
@@ -92,6 +94,7 @@ export class CreateMediaUseCase {
                   directorId,
                   artistsIds,
                   categoriesIds,
+                  type,
                   movie: {
                     create: movie
                   },

@@ -33,6 +33,7 @@ model Media {
   title          String
   description    String
   releaseDate    DateTime
+  type           MediaType
   director       Director       @relation(fields: [directorId], references: [id])
   directorId     String
   artists        Artist[]
@@ -42,6 +43,11 @@ model Media {
   parentalRating ParentalRating
   movie          Movie[]
   serie          Serie[]
+}
+
+enum MediaType {
+  MOVIE
+  SERIE
 }
 
 enum ParentalRating {
