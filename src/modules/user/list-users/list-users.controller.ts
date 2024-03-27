@@ -35,7 +35,7 @@ const listUsers = z.object({
 
 type ListUsers = z.infer<typeof listUsers>;
 
-@Controller('/users')
+@Controller('/user')
 export class ListUsersController {
   constructor(private readonly listUsersUseCase: ListUsersUseCase) { }
 
