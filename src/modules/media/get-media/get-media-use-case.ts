@@ -19,29 +19,42 @@ export class GetMediaUseCase {
             id: mediaId
           },
           include: {
-            artists: true,
-            categories: true,
-            director: true,
-            serie: true,
-            movie: true,
-          }
+            artists: {
+              select: {
+                name: true,
+                id: true
+              }
+            },
+            categories: {
+              select: {
+                name: true,
+                id: true
+              }
+            },
+            director: {
+              select: {
+                name: true,
+                id: true
+              }
+            },
+            serie: {
+              select: {
+                id: false,
+                seasons: true
+              }
+            },
+            movie: {
+              select: {
+                id: false,
+                duration: true,
+              }
+            },
+          },
         })
 
       if (media) {
         return {
-          media: {
-            id: media.id,
-            title: media.title,
-            description: media.description,
-            releaseDate: media.releaseDate,
-            artists: media.artists,
-            director: media.director,
-            categories: media.categories,
-            parentalRating: media.parentalRating,
-            serie: media.serie,
-            movie: media.movie,
-            type: media.type,
-          }
+          media
         }
       }
 
