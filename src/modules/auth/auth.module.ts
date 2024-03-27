@@ -8,6 +8,8 @@ import { SignInUseCase } from './sign-in/sign-in-use-case';
 import { SignInController } from './sign-in/sign-in.controller';
 import { SignUpUseCase } from './sign-up/sign-up-use-case';
 import { SignUpController } from './sign-up/sign-up.controller';
+import { SyncUseCase } from './sync/sync-use-case';
+import { SyncController } from './sync/sync.controller';
 
 @Module({
   imports: [
@@ -23,10 +25,12 @@ import { SignUpController } from './sign-up/sign-up.controller';
     JwtStrategy,
     SignInUseCase,
     SignUpUseCase,
+    SyncUseCase
   ],
   controllers: [
     SignInController,
-    SignUpController
+    SignUpController,
+    SyncController
   ],
   exports: [],
 })
