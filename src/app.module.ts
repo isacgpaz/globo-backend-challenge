@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CategoryModule } from './modules/category/category.module';
 import { DirectorModule } from './modules/director/director.module';
 import { MediaModule } from './modules/media/media.module';
+import { UsersModule } from './modules/user/user.module';
 import { PrismaService } from './prisma/prisma.service';
 
 @Module({
@@ -14,7 +15,8 @@ import { PrismaService } from './prisma/prisma.service';
     DirectorModule,
     ArtistModule,
     CategoryModule,
-    MediaModule
+    MediaModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
