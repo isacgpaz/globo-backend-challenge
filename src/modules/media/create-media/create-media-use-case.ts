@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common';
-import { Artist, Category, MediaType, ParentalRating } from '@prisma/client';
+import { Artist, Category, MediaType, Movie, ParentalRating, Serie } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 interface CreateMedia {
@@ -85,6 +85,33 @@ export class CreateMediaUseCase {
             )
 
             if (allCategoriesExists) {
+              let createdMovie: Movie | undefined = undefined
+              let createdSerie: Serie | undefined = undefined
+
+              if (type === MediaType.MOVIE && movie) {
+                createdMovie = await this.prisma.movie.create({
+                  data: movie
+                })
+              }
+
+              if (type === MediaType.SERIE && serie) {
+                createdSerie = await this.prisma.serie.create({
+                  data: {
+                    seasons: {
+                      create: serie?.seasons.map(season => ({
+                        episodes: {
+                          create: season.episodes.map(episode => ({
+                            title: episode.title,
+                            description: episode.description,
+                            duration: episode.duration
+                          }))
+                        }
+                      }))
+                    }
+                  }
+                })
+              }
+
               const media = await this.prisma.media.create({
                 data: {
                   title,
@@ -92,27 +119,19 @@ export class CreateMediaUseCase {
                   parentalRating,
                   releaseDate,
                   directorId,
-                  artistsIds,
-                  categoriesIds,
-                  type,
-                  movie: {
-                    create: movie
+                  artists: {
+                    connect: artistsIds.map((artistId) => ({
+                      id: artistId
+                    }))
                   },
-                  serie: {
-                    create: {
-                      seasons: {
-                        create: serie?.seasons.map(season => ({
-                          episodes: {
-                            create: season.episodes.map(episode => ({
-                              title: episode.title,
-                              description: episode.description,
-                              duration: episode.duration
-                            }))
-                          }
-                        }))
-                      }
-                    }
-                  }
+                  categories: {
+                    connect: categoriesIds.map((categoryId) => ({
+                      id: categoryId
+                    }))
+                  },
+                  type,
+                  movieId: createdMovie?.id ?? undefined,
+                  serieId: createdSerie?.id ?? undefined,
                 }
               })
 

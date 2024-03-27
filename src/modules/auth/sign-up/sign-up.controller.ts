@@ -1,10 +1,7 @@
-import { Body, Controller, HttpCode, Post, UseGuards, UsePipes } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post, UsePipes } from "@nestjs/common";
 import { AccessLevel } from "@prisma/client";
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe";
 import { z } from "zod";
-import { JwtAuthGuard } from "../guards/auth.guard";
-import { RolesGuard } from "../guards/roles.guard";
-import { HasRole } from "../shared/role.decorator";
 import { SignUpUseCase } from "./sign-up-use-case";
 
 const signUpSchema = z.object({
@@ -41,8 +38,8 @@ type SignUpSchema = z.infer<typeof signUpSchema>;
 export class SignUpController {
   constructor(private readonly signUpUseCase: SignUpUseCase) { }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @HasRole(AccessLevel.ADMIN)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @HasRole(AccessLevel.ADMIN)
   @Post('/sign-up')
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(signUpSchema))

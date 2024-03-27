@@ -38,14 +38,22 @@ export class ListMediasUseCase {
       }
 
       if (categoriesIds) {
-        query.categoriesIds = {
-          hasSome: categoriesIds
+        query.categories = {
+          some: {
+            id: {
+              in: categoriesIds
+            }
+          }
         }
       }
 
       if (artistsIds) {
-        query.artistsIds = {
-          hasSome: artistsIds
+        query.artists = {
+          some: {
+            id: {
+              in: artistsIds
+            }
+          }
         }
       }
 

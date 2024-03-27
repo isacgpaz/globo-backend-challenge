@@ -45,7 +45,7 @@ export class ListMediasController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @HasRole(AccessLevel.ADMIN)
   @Get()
-  @HttpCode(201)
+  @HttpCode(200)
   @UsePipes(new ZodValidationPipe(listMedias))
   async handle(@Query() listMedias: ListMedias) {
     const result = await this.listMediasUseCase.execute(listMedias);

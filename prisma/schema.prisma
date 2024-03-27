@@ -24,19 +24,18 @@ model Media {
   description    String
   releaseDate    DateTime
   parentalRating ParentalRating
-  directorId     String
-  artistsIds     String[]
-  categoriesIds  String[]
   type           MediaType
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   evaluations    Evaluation[]
   director       Director       @relation(fields: [directorId], references: [id])
-  mediaStats     MediaStats[]
-  movie          Movie[]
-  serie          Serie[]
-  artists        Artist[]       @relation("ArtistToMedia")
-  categories     Category[]     @relation("CategoryToMedia")
+  directorId     String
+  movie          Movie?         @relation(fields: [movieId], references: [id])
+  movieId        String?
+  serie          Serie?         @relation(fields: [serieId], references: [id])
+  serieId        String?
+  artists        Artist[]
+  categories     Category[]
 }
 
 model Evaluation {
@@ -53,38 +52,36 @@ model Evaluation {
   @@unique([mediaId, userId])
 }
 
-model MediaStats {
-  id               String @id @default(uuid())
-  mediaId          String
-  average          Float
-  evaluationsCount Int
-  media            Media  @relation(fields: [mediaId], references: [id])
-}
-
 model Category {
   id        String   @id @default(uuid())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  medias    Media[]  @relation("CategoryToMedia")
+  medias    Media[]
+}
+
+model Artist {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  medias    Media[]
 }
 
 model Movie {
   id        String   @id @default(uuid())
   duration  Int
-  mediaId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  media     Media    @relation(fields: [mediaId], references: [id])
+  medias    Media[]
 }
 
 model Serie {
   id        String   @id @default(uuid())
-  mediaId   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   seasons   Season[]
-  media     Media    @relation(fields: [mediaId], references: [id])
+  medias    Media[]
 }
 
 model Season {
@@ -113,14 +110,6 @@ model Director {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   medias    Media[]
-}
-
-model Artist {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  medias    Media[]  @relation("ArtistToMedia")
 }
 
 enum AccessLevel {
