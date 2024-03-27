@@ -42,6 +42,9 @@ export class ListUsersUseCase {
           where: query,
           skip: page * rowsPerPage,
           take: rowsPerPage,
+          orderBy: {
+            createdAt: 'asc'
+          }
         }),
         this.prisma.user.count({
           where: query
