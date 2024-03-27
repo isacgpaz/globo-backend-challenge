@@ -13,6 +13,7 @@ model User {
   name        String
   password    String
   accessLevel AccessLevel
+  status      UserStatus   @default(ENABLED)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   evaluation  Evaluation[]
@@ -115,6 +116,11 @@ model Director {
 enum AccessLevel {
   ADMIN
   USER
+}
+
+enum UserStatus {
+  ENABLED
+  BLOCKED
 }
 
 enum MediaType {

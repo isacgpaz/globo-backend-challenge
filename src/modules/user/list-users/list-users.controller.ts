@@ -1,5 +1,5 @@
 import { Controller, Get, HttpCode, Query, UseGuards, UsePipes } from "@nestjs/common";
-import { AccessLevel } from "@prisma/client";
+import { AccessLevel, UserStatus } from "@prisma/client";
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe";
 import { z } from "zod";
 import { JwtAuthGuard } from "../../auth/guards/auth.guard";
@@ -9,6 +9,7 @@ import { ListUsersUseCase } from "./list-users-use-case";
 
 const listUsers = z.object({
   name: z.string().optional().default(''),
+  status: z.nativeEnum(UserStatus).optional(),
   page: z
     .string({
       required_error: 'Número da página é obrigatório',

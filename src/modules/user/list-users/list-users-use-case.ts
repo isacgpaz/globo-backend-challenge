@@ -1,11 +1,12 @@
 import {
   Injectable
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { AccessLevel, Prisma, UserStatus } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 interface ListUsers {
   name?: string,
+  status?: UserStatus,
   page: number,
   rowsPerPage: number,
 }
@@ -17,16 +18,23 @@ export class ListUsersUseCase {
   async execute({
     page = 1,
     rowsPerPage = 10,
-    name
+    name,
+    status
   }: ListUsers) {
     try {
-      const query: Prisma.UserWhereInput = {}
+      const query: Prisma.UserWhereInput = {
+        accessLevel: AccessLevel.USER
+      }
 
       if (name) {
         query.name = {
           contains: name,
           mode: 'insensitive'
         }
+      }
+
+      if (status) {
+        query.status = status
       }
 
       const [users, usersCount] = await this.prisma.$transaction([
