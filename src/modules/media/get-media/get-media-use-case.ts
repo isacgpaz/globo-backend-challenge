@@ -56,9 +56,33 @@ export class GetMediaUseCase {
           },
         })
 
+      const [evaluations, evaluationsCount] = await this.prisma.$transaction([
+        this.prisma.evaluation.findMany({
+          where: {
+            mediaId,
+          },
+        }),
+        this.prisma.evaluation.count({
+          where: {
+            mediaId
+          }
+        })
+      ])
+
+      let evaluationRateTotal = 0
+
+      evaluations.forEach(evaluate => {
+        evaluationRateTotal += evaluate.rate
+      });
+
+      const averageRate = evaluationsCount
+        ? (evaluationRateTotal / evaluationsCount)
+        : null
+
       if (media) {
         return {
-          media
+          media,
+          averageRate
         }
       }
 
