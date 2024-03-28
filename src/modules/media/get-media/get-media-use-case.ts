@@ -40,7 +40,11 @@ export class GetMediaUseCase {
             serie: {
               select: {
                 id: false,
-                seasons: true
+                seasons: {
+                  include: {
+                    episodes: true
+                  }
+                }
               }
             },
             movie: {

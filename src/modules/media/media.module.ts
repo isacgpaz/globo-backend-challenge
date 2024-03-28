@@ -9,6 +9,8 @@ import { GetMediaUseCase } from './get-media/get-media-use-case';
 import { GetMediaController } from './get-media/get-media.controller';
 import { ListMediasUseCase } from './list-medias/list-medias-use-case';
 import { ListMediasController } from './list-medias/list-medias.controller';
+import { UpdateMediaUseCase } from './update-media/update-media-use-case';
+import { UpdateMediaController } from './update-media/update-media.controller';
 
 @Module({
   imports: [],
@@ -16,14 +18,16 @@ import { ListMediasController } from './list-medias/list-medias.controller';
     CreateMediaController,
     ListMediasController,
     EvaluateMediaController,
-    GetMediaController
+    GetMediaController,
+    UpdateMediaController
   ],
   providers: [
     PrismaService,
     CreateMediaUseCase,
     ListMediasUseCase,
     EvaluateMediaUseCase,
-    GetMediaUseCase
+    GetMediaUseCase,
+    UpdateMediaUseCase
   ],
 })
 
