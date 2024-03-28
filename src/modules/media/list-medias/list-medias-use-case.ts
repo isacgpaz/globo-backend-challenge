@@ -70,6 +70,9 @@ export class ListMediasUseCase {
           where: query,
           skip: page * rowsPerPage,
           take: rowsPerPage,
+          orderBy: {
+            title: 'asc'
+          }
         }),
         this.prisma.media.count({
           where: query
