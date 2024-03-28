@@ -69,6 +69,7 @@ export class GetMediaUseCase {
         })
       ])
 
+
       let evaluationRateTotal = 0
 
       evaluations.forEach(evaluate => {

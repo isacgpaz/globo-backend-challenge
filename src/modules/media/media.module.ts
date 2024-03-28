@@ -11,6 +11,8 @@ import { ListMediasUseCase } from './list-medias/list-medias-use-case';
 import { ListMediasController } from './list-medias/list-medias.controller';
 import { UpdateMediaUseCase } from './update-media/update-media-use-case';
 import { UpdateMediaController } from './update-media/update-media.controller';
+import { VerifyEvaluationUseCase } from './verify-evaluation/verify-evaluation-use-case';
+import { VerifyEvaluationController } from './verify-evaluation/verify-evaluation.controller';
 
 @Module({
   imports: [],
@@ -19,7 +21,8 @@ import { UpdateMediaController } from './update-media/update-media.controller';
     ListMediasController,
     EvaluateMediaController,
     GetMediaController,
-    UpdateMediaController
+    UpdateMediaController,
+    VerifyEvaluationController
   ],
   providers: [
     PrismaService,
@@ -27,7 +30,8 @@ import { UpdateMediaController } from './update-media/update-media.controller';
     ListMediasUseCase,
     EvaluateMediaUseCase,
     GetMediaUseCase,
-    UpdateMediaUseCase
+    UpdateMediaUseCase,
+    VerifyEvaluationUseCase
   ],
 })
 
