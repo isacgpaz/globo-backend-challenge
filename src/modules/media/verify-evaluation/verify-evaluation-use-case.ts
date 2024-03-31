@@ -38,7 +38,8 @@ export class VerifyEvaluationUseCase {
           })
 
           return {
-            evaluationAvalable: !evaluation
+            evaluationAvalable: !evaluation,
+            rate: evaluation?.rate
           }
         }
 
