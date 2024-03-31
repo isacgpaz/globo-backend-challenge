@@ -177,12 +177,12 @@ export class UpdateMediaUseCase {
 
 function verifyArtistInArtistsIds(artists: Artist[], artistsIds: string[]) {
   for (const artist of artists) {
-    return artistsIds.every((artistId) => artistId === artist.id)
+    return artistsIds.includes(artist.id)
   }
 }
 
 function verifyCategoriesInCategoriessIds(categories: Category[], categoriesIds: string[]) {
   for (const category of categories) {
-    return categoriesIds.every((categoryId) => categoryId === category.id)
+    return categoriesIds.includes(category.id)
   }
 }

@@ -63,6 +63,8 @@ export class CreateMediaUseCase {
 
         const allArtistsExists = verifyArtistInArtistsIds(artists, artistsIds)
 
+        console.log(artists.map(({ id }) => id), artistsIds, allArtistsExists);
+
         if (allArtistsExists) {
           const director = await this.prisma.director.findUnique({
             where: {
@@ -160,12 +162,12 @@ export class CreateMediaUseCase {
 
 function verifyArtistInArtistsIds(artists: Artist[], artistsIds: string[]) {
   for (const artist of artists) {
-    return artistsIds.every((artistId) => artistId === artist.id)
+    return artistsIds.includes(artist.id)
   }
 }
 
 function verifyCategoriesInCategoriessIds(categories: Category[], categoriesIds: string[]) {
   for (const category of categories) {
-    return categoriesIds.every((categoryId) => categoryId === category.id)
+    return categoriesIds.includes(category.id)
   }
 }
