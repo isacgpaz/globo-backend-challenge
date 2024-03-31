@@ -1,8 +1,7 @@
-import { Controller, Get, HttpCode, Query, UseGuards, UsePipes } from "@nestjs/common";
+import { Controller, Get, HttpCode, Query, UsePipes } from "@nestjs/common";
 import { MediaType } from "@prisma/client";
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe";
 import { z } from "zod";
-import { JwtAuthGuard } from "../../auth/guards/auth.guard";
 import { ListMediasUseCase } from "./list-medias-use-case";
 
 const listMedias = z.object({
@@ -40,7 +39,6 @@ type ListMedias = z.infer<typeof listMedias>;
 export class ListMediasController {
   constructor(private readonly listMediasUseCase: ListMediasUseCase) { }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   @HttpCode(200)
   @UsePipes(new ZodValidationPipe(listMedias))
