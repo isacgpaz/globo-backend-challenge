@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserStatus } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -32,22 +33,26 @@ export class SignInUseCase {
         throw new BadRequestException('Usuário e/ou senha inválidos.');
       }
 
-      const isPasswordMatched = await bcrypt.compare(password, user.password)
+      if (user.status === UserStatus.ENABLED) {
+        const isPasswordMatched = await bcrypt.compare(password, user.password)
 
-      if (isPasswordMatched) {
-        const { password, ...userWithoutPassword } = user
+        if (isPasswordMatched) {
+          const { password, ...userWithoutPassword } = user
 
-        return {
-          accessToken: this.jwtService.sign({
-            identifier: email,
-            sub: user.id,
-            accessLevel: user.accessLevel,
-          }),
-          user: userWithoutPassword,
-        };
+          return {
+            accessToken: this.jwtService.sign({
+              identifier: email,
+              sub: user.id,
+              accessLevel: user.accessLevel
+            }),
+            user: userWithoutPassword,
+          };
+        }
+
+        throw new BadRequestException('Usuário e/ou senha inválidos.');
       }
 
-      throw new BadRequestException('Usuário e/ou senha inválidos.');
+      throw new BadRequestException('Usuário está desativado.');
     } catch (error) {
       throw error;
     }
