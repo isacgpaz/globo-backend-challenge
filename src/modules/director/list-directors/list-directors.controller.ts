@@ -1,7 +1,6 @@
-import { Controller, Get, HttpCode, Query, UseGuards, UsePipes } from "@nestjs/common";
+import { Controller, Get, HttpCode, Query, UsePipes } from "@nestjs/common";
 import { ZodValidationPipe } from "src/pipes/zod-validation-pipe";
 import { z } from "zod";
-import { JwtAuthGuard } from "../../auth/guards/auth.guard";
 import { ListDirectorsUseCase } from "./list-directors-use-case";
 
 const listDirectors = z.object({
@@ -35,7 +34,6 @@ type ListDirectors = z.infer<typeof listDirectors>;
 export class ListDirectorsController {
   constructor(private readonly listDirectorsUseCase: ListDirectorsUseCase) { }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   @HttpCode(200)
   @UsePipes(new ZodValidationPipe(listDirectors))
